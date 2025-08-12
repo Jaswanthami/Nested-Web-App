@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./users.json:/app/users.json
+    restart: unless-stopped
+
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+      - ./products.html:/usr/share/nginx/html/products.html
+      - ./wishlist.html:/usr/share/nginx/html/wishlist.html
+      - ./cart.html:/usr/share/nginx/html/cart.html
+      - ./login.html:/usr/share/nginx/html/login.html
+      - ./register.html:/usr/share/nginx/html/register.html
+    depends_on:
+      - backend
+    restart: unless-stopped
